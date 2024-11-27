@@ -1,24 +1,29 @@
+//{ items: [], heading: string}
 
-// import { Fragment } from "react";
+interface Props{
+    items: string[];
+    heading: string;
+    onSelectItem: (item: string ) =>void;
+}
 
-import { MouseEvent } from "react";
-function ListGroup() {
+import { useState } from "react";
+function ListGroup({items, heading, onSelectItem}: Props) {
+    const [selectedIndex, setSelectedIndex,] = useState(-1);
 
-    let items = ["Bangaldesh","Japan","India","France",];
-
-    //Event handler
-    const handleClick = (event: MouseEvent) => console.log(event);
+    heading = "";
 
   return (
         <>
-        <h1>List</h1>
+        <h1>{heading}</h1>
         {items.length === 0 &&<p>No item found</p> }
        
             <ul className="list-group">
             {items.map((item,index) => (
-                <li className="list-group-item" 
+                <li className={ selectedIndex === index ? 'list-group-item active' : 'list-group-item' }
                 key={item} 
-                onClick={handleClick}>
+                onClick={() => {setSelectedIndex(index);
+                onSelectItem(item);
+                 }}>
                 {item}
                 </li>
             ))}
